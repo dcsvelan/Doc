@@ -51,5 +51,13 @@ else:
             # Display the answer
             st.write("Answer:", answer)
         except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-            st.error("Please check your OpenAI API key and try again.")
+            error_message = str(e)
+            st.error(f"An error occurred: {error_message}")
+            if "insufficient_quota" in error_message:
+                st.error("You have exceeded your current OpenAI API quota.")
+                st.info("To resolve this:")
+                st.info("1. Check your usage at https://platform.openai.com/account/usage")
+                st.info("2. Verify your billing info at https://platform.openai.com/account/billing")
+                st.info("3. Consider upgrading your plan or waiting for your quota to reset")
+            else:
+                st.error("Please check your OpenAI API key and try again.")
